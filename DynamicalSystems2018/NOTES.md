@@ -49,3 +49,11 @@ It follows from 'Green Theorem'.
 
 How change in parameters changes the global behaviour. 
 
+## Hopf's bifurcation
+
+When complex conjugate eigen values cross the imaginary axis from the negative real axis ,
+we see a Hopf bifurcation.
+
+- Supercritical Hopf (Stable)
+- Subcritical Hopf (Unstable)
+- Homoclinic bifurcation
