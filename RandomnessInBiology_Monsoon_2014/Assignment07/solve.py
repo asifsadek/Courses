@@ -43,7 +43,7 @@ class GeneticSwitch():
         self.time = 0.0
         self.currentStep = 0
         self.dx = 0.0
-        self.alpha = np.random.normal(0, 1.0, self.totalSteps)
+        self.alpha = np.random.normal(0, 1.0, int(self.totalSteps))
         self.stateBTimes = []
 
     def f(self, x):
@@ -121,7 +121,7 @@ class GeneticSwitch():
         plt.figure()
         self.step = step
         self.stateBThreshold = thresholdB
-        self.alpha = np.random.normal(0, 1.0,1e6)
+        self.alpha = np.random.normal(0, 1.0, int(1e6) )
         self.transitionTime = []
         output = []
         while j < totalTimes:
@@ -156,7 +156,7 @@ class GeneticSwitch():
         self.step = step
         self.stop = stop
         self.totalSteps = int(self.stop/self.step)
-        self.alpha = np.random.normal(0, 1.0, self.totalSteps)
+        self.alpha = np.random.normal(0, 1.0, int(self.totalSteps))
         # Trajectory of protein when its # goes from 0 to steady state value is not
         # so exciting, let's chop it off.
         self.cutoff = int(30.0 / self.step)
@@ -213,7 +213,7 @@ class GeneticSwitch():
 
     def transitions(self, step, noOfTransitions, thresholdA, thresholdB):
         self.step = step
-        self.alpha = np.random.normal(0, 1.0,1e7)
+        self.alpha = np.random.normal(0, 1.0, int(1e7) )
         self.stateAThreshold = thresholdA
         self.stateBThreshold = thresholdB 
         self.solveLangevianForTransitions(noOfTransitions)
@@ -235,4 +235,6 @@ def main(problem = 1):
 
 if __name__ == '__main__':
     import sys
-    main(int(sys.argv[1]))
+    main(1)
+    main(2)
+    main(3)
