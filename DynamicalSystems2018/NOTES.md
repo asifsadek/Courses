@@ -40,7 +40,14 @@ $\exists g$ s.t. iff $\int_c g.x$ has same sign then $x$ is not periodic.
 
 It follows from 'Green Theorem'.
 
-# Birfuracation
+## Poincare map
+
+- Stability of periodic orbit is stability of fixed point in Poincare map.
+- 
+
+# Bifurcations
+
+How change in parameters changes the global behaviour. 
 
 ## Hopf's bifurcation
 

@@ -4,7 +4,10 @@ load( plotdf )$
 eq1 : 'diff(theta,t) = omega;
 eq2 : 'diff(omega,t)= alpha * omega + I - sin( theta );
 
+solve( [rhs(eq1) = 0, rhs(eq2) = 0], [ theta, omega] );
+
 /* generate phase plot and solutions */
+/*
 plotdf( [ rhs(eq1), rhs(eq2) ]
         , [ theta, omega ]
         , [ theta, -4*%pi, 4*%pi ]
@@ -15,4 +18,4 @@ plotdf( [ rhs(eq1), rhs(eq2) ]
         , [nsteps,500]
         , [sliders,"I=0:2,alpha=0:1"]
         )$
-
+*/
