@@ -25,18 +25,19 @@ def init_game( g ):
 
 def simulate(N, n_games):
     steps = []
-    badGames = 0
+    badGames, goodGames = 0, 0
     for i in range(n_games):
         f1, f2 = game(N)
         if len(f1) > 100:
             badGames += 1
             continue
-        print('Game%3d,' % i, end = '' )
-        print(' Steps %3d | ' % len(f1), end='')
-        print( 'F1: %.3f, F2: %.2f' % (np.mean(f1), np.mean(f2)))
+        goodGames += 1
+        #  print('Game%3d,' % i, end = '' )
+        #  print(' Steps %3d ' % len(f1), end='')
         steps.append(len(f1))
     print( '============' )
-    print( 'Bad games: %d' % badGames)
+    print( 'Polygon size %d' % N)
+    print( 'Bad games: %d / Total %d' % (badGames, badGames+goodGames))
     u, s = np.mean(steps), np.std(steps)
     print( 'Mean steps: %.2f. std: %.2f' % (u,s))
     return u, s
@@ -45,7 +46,7 @@ def game(N):
     g = nx.cycle_graph(N)
     n1, n2 = init_game(g)
     f1, f2 = [n1], [n2]
-    maxSteps = 100
+    maxSteps = 200
     for i in itertools.count() :
         # n1 selects an edge
         n11 = random.choice(list(g.neighbors(n1)))
@@ -61,12 +62,14 @@ def game(N):
 
 def main():
     X, Y, Yerr = [], [], []
-    for n in range(6, 15):
+    for n in range(4, 15):
         X.append(n)
-        u, s = simulate(N=6, n_games = 50000)
+        u, s = simulate(N=n, n_games = n*5000)
         Y.append(u)
         Yerr.append(s)
     plt.errorbar(X, Y, Yerr)
+    plt.xlabel( 'Polygon size')
+    plt.ylabel( r'#Games')
     plt.savefig( '%s.png' % __file__ )
 
 
