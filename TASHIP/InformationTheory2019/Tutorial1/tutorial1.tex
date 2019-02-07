@@ -77,7 +77,7 @@ does not depend on the outcome of other.
     \end{parts}
 
 \question[5] Prove of disprove: If $X$ and $Y$ are independent random variables,
-then so are $F(X)$ and $G(X)$ where $F$ and $G$ are any function. [Concrete
+then so are $F(X)$ and $G(Y)$ where $F$ and $G$ are any function. [Concrete
 Math, Graham et al.]
 
 \question[3] \BONUS Construct a random variable which has finite mean and infinite
@@ -170,7 +170,8 @@ What is the mean and variance of X for a fair coin anyway?  \footnote{mean=6,std
 \end{solution} 
 
 \question[10] \textbf{Ultimate Frisbee} 
-Six players stand at the vertices of a hexagon, throwing frisbees to each other.
+Six (five) players stand at the vertices of a hexagon (pentagon), throwing
+Frisbees to each other.
 
 \tikz{
     \node[draw, regular polygon, blue, regular polygon sides=6, inner sep=1cm] (a) {};
@@ -186,18 +187,17 @@ Six players stand at the vertices of a hexagon, throwing frisbees to each other.
     \draw[frisbee] ([shift=(45:1mm)]p2) -- ++(-135:7mm);
 }
 
-They have two frisbees, initially at the adjacent vertices as shown in the
-figure above. The frisbee is thrown either to the left or to the right with
+They have two Frisbees, initially at the adjacent vertices as shown in the
+figure above. The Frisbee is thrown either to the left or to the right with
 equal probability. The game stops when one player is the target of both
-frisbees. (All throws the independent of past history).
+Frisbees. (All throws the independent of past history).
 
 \begin{enumerate}
-    \item Find the mean and variance of the number of pairs of throws.
+    \item Find the mean and variance of the number of pairs of throws. For some
+        initial values, the game may never stop in the case of hexagon.
     \item Find the expression for probability that the game lasts more than 500
         steps, in terms of Fibonacci numbers.
 \end{enumerate} [Coc. Math., Knuth]
-
-
 
 \paragraph{Typical dressing}
 
