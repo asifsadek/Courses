@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """frisbee.py: 
-
 """
     
 __author__           = "Dilawar Singh"
@@ -10,11 +9,8 @@ __maintainer__       = "Dilawar Singh"
 __email__            = "dilawars@ncbs.res.in"
 __status__           = "Development"
 
-import sys
-import os
 import numpy as np
 import random
-import cv2 
 import networkx as nx
 import itertools
 import matplotlib.pyplot as plt
@@ -46,7 +42,7 @@ def game(N):
     g = nx.cycle_graph(N)
     n1, n2 = init_game(g)
     f1, f2 = [n1], [n2]
-    maxSteps = 200
+    maxSteps = 500
     for i in itertools.count() :
         # n1 selects an edge
         n11 = random.choice(list(g.neighbors(n1)))
@@ -64,14 +60,13 @@ def main():
     X, Y, Yerr = [], [], []
     for n in range(4, 15):
         X.append(n)
-        u, s = simulate(N=n, n_games = n*5000)
+        u, s = simulate(N=n, n_games = n*1000)
         Y.append(u)
         Yerr.append(s)
     plt.errorbar(X, Y, Yerr)
     plt.xlabel( 'Polygon size')
     plt.ylabel( r'#Games')
     plt.savefig( '%s.png' % __file__ )
-
 
 if __name__ == '__main__':
     main()
