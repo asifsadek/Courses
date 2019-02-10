@@ -1,7 +1,5 @@
 """lotteries.py: 
-
 Two lotteris.
-
 """
     
 __author__           = "Dilawar Singh"
@@ -12,21 +10,12 @@ __email__            = "dilawars@ncbs.res.in"
 __status__           = "Development"
 
 import sys
-import os
 import random
-import math
 
 import matplotlib as mpl
+# mpl.use( 'pgf' )
 import matplotlib.pyplot as plt
-try:
-    mpl.style.use( 'ggplot' )
-except Exception as e:
-    pass
-mpl.rcParams['axes.linewidth'] = 0.1
-plt.rc('text', usetex=True)
-plt.rc('font', family='serif')
-
-import matplotlib.pyplot as plt
+mpl.style.use(['bmh'])
 import numpy as np
 from collections import Counter
 
@@ -67,13 +56,14 @@ def main( ):
     resA = [ playA( i ) for i in range( N ) ]
     resB = [ playB( i ) for i in range( N ) ]
 
+    #  plt.figure(figsize=(10,5))
     for i, res in enumerate( [ resA, resB  ] ):
         x = Counter( res )
         plt.subplot( 2, 2, i+1)
 
         xvec = range( len( x ) )
-        yvec = np.array( x.values( ), dtype = np.float )
-        yvec = yvec / np.sum( yvec )
+        yvec = np.array(list(x.values()), dtype=np.float)
+        yvec = yvec/np.sum(yvec)
 
         plt.bar( xvec, yvec, 1 )
 

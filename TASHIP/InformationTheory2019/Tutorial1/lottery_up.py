@@ -1,5 +1,4 @@
 """lottery_up.py: 
-
 """
     
 __author__           = "Dilawar Singh"
@@ -10,9 +9,11 @@ __email__            = "dilawars@ncbs.res.in"
 __status__           = "Development"
 
 import sys
-import os
 import random
+import matplotlib as mpl
+# mpl.use( 'pgf' )
 import matplotlib.pyplot as plt
+mpl.style.use( ['bmh', 'fivethirtyeight'] )
 import numpy as np
 
 # N people with 1 lakh rupee each each with their fav. number.
