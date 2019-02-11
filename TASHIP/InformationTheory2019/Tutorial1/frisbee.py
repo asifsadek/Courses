@@ -13,10 +13,10 @@ import numpy as np
 import random
 import networkx as nx
 import itertools
-import matplotlib.pyplot as plt
+from collections import defaultdict
 
 def init_game( g ):
-    n1, n2 = random.sample(g.nodes(), k=2)
+    n1, n2 = 0, 1
     return n1, n2
 
 def simulate(N, n_games):
@@ -28,14 +28,12 @@ def simulate(N, n_games):
             badGames += 1
             continue
         goodGames += 1
-        #  print('Game%3d,' % i, end = '' )
-        #  print(' Steps %3d ' % len(f1), end='')
         steps.append(len(f1))
     print( '============' )
     print( 'Polygon size %d' % N)
     print( 'Bad games: %d / Total %d' % (badGames, badGames+goodGames))
     u, s = np.mean(steps), np.std(steps)
-    print( 'Mean steps: %.2f. std: %.2f' % (u,s))
+    print( 'Mean steps: %.2f. var: %.2f' % (u,s**2))
     return u, s
 
 def game(N):
@@ -52,21 +50,39 @@ def game(N):
         f1.append(n1); f2.append(n2)
         if n1 == n2:
             break
-        if i == maxSteps:
+        if 1+i == maxSteps:
             break
     return f1, f2
 
-def main():
-    X, Y, Yerr = [], [], []
-    for n in range(4, 15):
-        X.append(n)
-        u, s = simulate(N=n, n_games = n*1000)
-        Y.append(u)
-        Yerr.append(s)
-    plt.errorbar(X, Y, Yerr)
-    plt.xlabel( 'Polygon size')
-    plt.ylabel( r'#Games')
-    plt.savefig( '%s.png' % __file__ )
+def simulate_game():
+    n = 5
+    u, s = simulate(N=n, n_games = 100000)
+    print(u, s)
+
+def simulate_state_machine(g, s, t, paths=[]):
+    L = []
+    N = 10000
+    for i in range(N):
+        path, p = s, 1.0
+        while True:
+            ns = list(g.successors(path[-1]))
+            n = random.choices(ns, weights=[float(g[path[-1]][x]['p']) for x in ns], k=1)[0]
+            p *= float( g[path[-1]][n]['p'] )
+            path += n
+            if n == t:
+                break
+        L.append(len(path))
+    print( 'Mean and variance after %d runs' %N)
+    print( np.mean(L), np.std(L))
+
+def estimate( ):
+    g = nx.DiGraph(nx.drawing.nx_agraph.read_dot('./frisbee.dot'))
+    src, tgt = '1', '0'
+    simulate_state_machine(g, src, tgt)
+
+def main( ):
+    estimate()
+    simulate_game()
 
 if __name__ == '__main__':
     main()

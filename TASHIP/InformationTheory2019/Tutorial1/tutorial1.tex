@@ -1,12 +1,14 @@
 \RequirePackage{luatex85,shellesc}
 \documentclass[a4paper,8pt,addpoints,solution]{exam}
 \usepackage{pgf,tikz}
-\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes.geometric,automata,arrows,positioning}
 \usepackage{tikzsymbols}
 \usepackage{marginnote}
 \usepackage{pgfplots}
 \usepackage{caption}
+\usepackage{hyperref}
 \usepackage{amsthm}
+\usepackage{ulem}
 \usepackage{booktabs}
 \usepackage{grffile}
 \usepackage{amsmath}
@@ -253,21 +255,21 @@ What is the mean and variance of X for a fair coin anyway?  \footnote{mean=6,std
 \end{solution} 
 
 \question[10] \textbf{Ultimate Frisbee} 
-Six (five) players stand at the vertices of a hexagon (pentagon), throwing
+\sout{Six} Five players stand at the vertices of a \sout{hexagon} pentagon, throwing
 Frisbees to each other.
 
 \tikz{
-    \node[draw, regular polygon, blue, regular polygon sides=6, inner sep=1cm] (a) {};
+    \node[draw, regular polygon, blue, regular polygon sides=5, inner sep=1cm] (a) {};
 
     \tikzset{frisbee/.style={-latex, very thick, shorten <= 2pt}}
     \node[circle, fill=blue] (p1) at (a.corner 1) {};
     \node[circle, fill=blue] (p2) at (a.corner 2) {};
 
     \draw[frisbee] ([shift=(45:1mm)]p1) -- ++(-60:7mm);
-    \draw[frisbee] ([shift=(45:1mm)]p1) -- ++(-180:7mm);
+    \draw[frisbee] ([shift=(45:1mm)]p1) -- ++(210:7mm);
 
-    \draw[frisbee] ([shift=(45:1mm)]p2) -- ++(0:7mm);
-    \draw[frisbee] ([shift=(45:1mm)]p2) -- ++(-135:7mm);
+    \draw[frisbee] ([shift=(45:1mm)]p2) -- ++(45:7mm);
+    \draw[frisbee] ([shift=(45:1mm)]p2) -- ++(-60:7mm);
 }
 
 They have two Frisbees, initially at the adjacent vertices as shown in the
@@ -283,9 +285,86 @@ Frisbees. (All throws the independent of past history).
 \end{enumerate} [Conc. Math., Knuth]
 
 \begin{solution}
-    If number of vertices are even and Frisbees are initially even vertices away
-    (as shown in figure above), the game will never end (Proof? Ask your
-    colleague Aashish). 
+    \emph{In the original draft of this tutorial, I used a hexagon. For the
+        given initial condition, the game will never stop. Or it will always
+        take more than 500 steps.
+    }
+
+    The solution to this problem is tricky. I could not find a solution
+    different than one given in the reference which use probability generating
+    function.\footnote{What is the probability of getting such a complicated problem in
+    your tutorial?}
+
+    There are various ways to setup this problem. Here is mine. Lets define the
+    states of the system. One can use vertices of the pentagon. A more useful
+    one would be the distance between frisbees. There are tree states: distance
+    of 0, 1, and 2. The state transition diagram is following where number on
+    the arrows are the probability of transition.
+
+    \tikzset{state/.style={circle,fill=blue!20, draw=none}}
+    \begin{tikzpicture}[semithick, node distance=2cm, auto, shorten >= 1pt]
+        \node[initial,state] (n1) {1};
+        \node[state,right=of n1, accepting] (n0) {0};
+        \node[state,below right=of n1] (n2) {2};
+
+        \path[->] 
+            (n1) edge[bend left] node {1/4} (n2)
+                edge[loop above] node {1/2+1/4} ()
+                (n2) edge[bend left] node {1/4} (n1)
+                edge[loop below] node {1/2} ()
+                edge node[right]{1/4} (n0);
+    \end{tikzpicture}	
+
+    If we walk on this state machine (always from \tikz \node[state] {1};), we
+    get sequence of nodes. For example, 120, 1220, 12220, 12120 etc. By looking
+    at this picture, we can say few things. First, possibility of a game lasting
+    N steps is non-zero for all N (we can get stuck in state \tikz \node[state]
+    {2}; or \tikz\node[state]{1}; for as long as we like with non-zero
+    probability).
+
+    \paragraph{Mean and variance of pairs of throw} Its rather simple but
+    counting is hard! Enumerate all paths which starts from
+    \tikz\node[state]{1}; and end with \tikz\node[state]{0}; and note down their
+    probability and length. For example, path \texttt{120} has length 2 and probability
+    of 1/16; similarly path \texttt{12120} has length 5 and probability
+    1/4$\cdot$1/4$\cdot$1/4$\cdot$1/4=1/256. Other examples are 120, 1120,
+    11120, 11220, 11220, etc.. Unfortunately there is no simple argument by
+    which we can ignore some paths.
+
+    I used computer to simulate the game as it is; and also to simulate the state
+    machine shown above. I got roughly the same answer.
+
+    \begin{tabular}{l l l}
+         & Mean & std \\
+        State Machine & 12.9657 & 10.0026 \\
+        Game & 12.970 & 9.936965
+    \end{tabular}
+
+    The Python3 script can be found here
+    \url{http://github.com/dilawar/courses/raw/master/TASHIP/InformationTheory2019/Tutorial1/frisbee.py}.
+
+    \paragraph{Generating function} You will meet the probability generating
+    function later in the course but don't worry; we don't ask any question
+    about them in the exam. But they are powerful abstraction. And this
+    exercise should convince them. For the above state machine, lets say there
+    are three generating function A (distance 0), B (distance 1), and C
+    (distance 2) where $z^nB$ would mean the probability of distance 1 after n
+    throws. The generating function satisfies the following (look at the state
+    machine).
+
+    $$A = \frac{1}{4}zB$$ meaning Pr(\tikz\node[state]{2}; $\rightarrow$
+    \tikz\node[state]{0};)=1/4. Or if both frisbees are already 1 distance away,
+    and probability of zero distance between them after one throw is 1/4,
+    similarly, 
+
+    $$B=\frac{1}{2}zB + \frac{1}{4}zC,\quad C=1+\frac{1}{4}zB+\frac{3}{4}zC$$
+    
+    And we are done. It follows that $A=\frac{z^2}{16-20z+5z^2}$. Computing mean
+    and variance of A is straightforward once you know the basic theory behind
+    z-transform. The results are mean=12 and variance=100.
+
+    If you have a simpler solution, that would be really cool!
+
 \end{solution}
 
 \paragraph{Typical dressing}
@@ -329,6 +408,13 @@ Whenever he picks 1 shirt, 1 pant, 1 pair of shoes, 1 pair of socks, 1 hat and
 \section{Distributions} \question[5] A man claims that he has average height and
 average weight, therefore, he is an average man. But he is considered slightly
 overweight. Explain? (Hint: Weight $\propto$ height$^3$)
+
+\begin{solution}
+    Jensen Inequality which state that if $f$ is a convex function then
+    $f(\MEAN{X}) \le \MEAN{f(X)}$. It follows $\MEAN{X}^3 \le \MEAN{X^3}$
+    i.e., weight for the average height is less than the average weight of the
+    population. 
+\end{solution}
 
 \section{Some calculus}
 
