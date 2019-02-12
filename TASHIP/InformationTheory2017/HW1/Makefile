@@ -1,9 +1,4 @@
-doc : ./hw1.pdf  solve 
-
-
-solve : ./problem1.hs 
-	ghc $< -o prb1 && ./prb1 
-
+doc : ./hw1.pandoc.pdf  
 
 %.pdf : %.pandoc 
-	~/Scripts/pandoc2pdf.sh $<
+	~/Scripts/md2pdf.sh $<

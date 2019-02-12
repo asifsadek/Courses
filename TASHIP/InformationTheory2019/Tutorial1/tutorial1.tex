@@ -27,12 +27,12 @@
 
 \newcommand\MEAN[1]{\langle #1\rangle}
 \newcommand\VAR[1]{\text{Var}(#1)}
-\newcommand\BONUS{\textbf{(bonus)} }
 \newcommand\MARGIN[1]{\marginpar{\emph{\small #1}}}
 \newcommand\PR{\text{Pr}}
 
 % solution.
-\printanswers
+\printanswers 
+\addpoints
 
 % Title Page
 \title{Information Theory 2019 \\ Tutorial 1} 
@@ -214,11 +214,11 @@ time.
 \begin{parts}
     \part[2] Consider $\epsdice{1}\epsdice{4}$ and $\epsdice{4}\epsdice{1}$ etc. as distinct events.
     \part[3] Consider $\epsdice{1}\epsdice{5}$ and $\epsdice{5}\epsdice{1}$ etc. as same event.
-    \part[3] \textbf{(bonus)} Repeat the problem for 4 dice. You can use computer program to
+    \bonuspart[3] Repeat the problem for 4 dice. You can use computer program to
 check your results.
 \end{parts}
 
-\question[5]
+\question
 Your TA flipped a Rs. 1 coin repeatedly. Once he got two head in succession,
 he noted down the number of flips. He got the following sequence:
 \verb|6,3,6,8,7,12,16,2,3,2| 
@@ -369,7 +369,7 @@ Frisbees. (All throws the independent of past history).
 
 \paragraph{Typical dressing}
 
-\question[5] \textbf{(Counting)}
+\question \textbf{(Counting)}
 A man has a non-magical wardrobe containing 10 shirts, 10 pants, 20 pairs of
 socks, 10 pairs of shoes, 30 hats, and 50 neck-ties. He picks 6 items everyday.
 Whenever he picks 1 shirt, 1 pant, 1 pair of shoes, 1 pair of socks, 1 hat and
@@ -405,7 +405,9 @@ Whenever he picks 1 shirt, 1 pant, 1 pair of shoes, 1 pair of socks, 1 hat and
     \end{solution}
 \end{parts}
 
-\section{Distributions} \question[5] A man claims that he has average height and
+\section{Distributions} 
+
+\question[5] A man claims that he has average height and
 average weight, therefore, he is an average man. But he is considered slightly
 overweight. Explain? (Hint: Weight $\propto$ height$^3$)
 
