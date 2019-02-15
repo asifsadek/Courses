@@ -9,7 +9,7 @@ __email__            = "dilawars@ncbs.res.in"
 __status__           = "Development"
 
 import sys
-import os
+import fractions
 import math
 import itertools
 
@@ -43,15 +43,28 @@ def distribute_horses(N, pis):
 def entropy(xi, pi):
     return - sum([x*p*math.log(p,2) for (x,p) in zip(xi,pi)])
 
+def prefix_free_code(nis, pis):
+    for ni in nis:
+        pini = sorted([x for x in zip(pis,ni) if x[1]>0], reverse=True)
+        print(list(pini))
+    quit()
+
 def main( ):
     nH = 8
-    pis = [prob_of_ith_class(i) for i in range(1,6)]
+    pis = [prob_of_ith_class(i) for i in range(1,nH)]
     print( pis )
     dist = distribute_horses(8, pis)
+    #  prefix_free_code(dist, pis)
     print('\n\n=== Distributions of horse ===')
-    print('%s  Entropy' % ' '.join(['%.5f'%p for p in pis]))
-    for i, d in enumerate(dist):
-        print('%s  %.3f'%(' '.join(['%7d'%x for x in d]), entropy(d,pis)))
+    resfile = 'resfile.csv'
+    with open(resfile, 'w') as f:
+        f.write('%s,Entropy\n' % ','.join([str(fractions.Fraction(p)) for p in pis]))
+        for i, d in enumerate(dist):
+            f.write('%s,%.3f\n'%(','.join(['%d'%x for x in d]), entropy(d,pis)))
+    print( "[INFO ] Wrote results to results.csv file." )
+    with open(resfile) as f:
+        print(f.read())
+    
 
 if __name__ == '__main__':
     main()

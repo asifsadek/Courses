@@ -1,6 +1,7 @@
 \documentclass[10pt,answers]{exam}
 \usepackage{mathtools,amsmath,amssymb,amsthm,mathrsfs}
 \usepackage{pgfplots}
+\usepackage{hyperref}
 \usepackage{pgfplotstable}
 \usepackage[multidot]{grffile}
 \usepackage{pgf,tikz}
@@ -40,6 +41,12 @@ horses in each probability class \(2^{-i}\).
   the uniform case).
 
 \begin{solution}
+
+    Script
+    \href{http://github.com/dilawar/courses/raw/master/TASHIP/InformationTheory2019/HW1/problem1.py}{problem1.py}
+    generates some solutions (probably all possible) to this problem. They are
+    listed below.
+
 \begin{longtable}[]{@{}llllll@{}}
   \toprule
   \(1/2\) & \(1/4\) & \(1/8\) & \(1/16\) & \(1/32\) &
@@ -62,21 +69,18 @@ horses in each probability class \(2^{-i}\).
 \end{solution}
 
 \part[3] Using the entropy concept, calculate the expected codeword length for
-  each set.
+each set. The expected codeword length is equal to entropy.
   \begin{solution}
       See the table \ref{tab:1}.
   \end{solution}
 \part[6] For each set, present an efficient binary coding scheme that achieves
   optimality.
   \begin{solution}
+      Code are not given. Your code must be decodable and its entropy should be near
+      or equal to calculated entropy given in table above.
   \end{solution}
 \end{parts}
 
-Script \texttt{./problem1.py} generates some solutions (probably all possible)
-to this problem. They are listed below.
-
-Code are not given. Your code must be decodable and its entropy should be near
-or equal to calculated entropy given in table above.
 
 
 \question{[CT 2.13] Coin weighing.}
