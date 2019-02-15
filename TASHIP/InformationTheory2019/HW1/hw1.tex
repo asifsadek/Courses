@@ -79,6 +79,14 @@ a balance.
     find the counterfeit coin (if any) and correctly declare it to be
     heavier or lighter.
     \begin{solution}
+        $3^k \ge (2n+1)$
+    \end{solution}
+
+    \part[5] Suppose you have k = 3 weighing and 12 coins. How many coins must you
+    weigh against each other in the first round?
+
+    \begin{solution}
+
         Lets not do any guess work! We draw \(k\) coins and weigh
         them with another \(k\) coins.
 
@@ -110,28 +118,22 @@ a balance.
 
         You can weigh 4 or 5 coins with another equal number of coins. This will
         reduce the possible states by maximum! 
-    \end{solution}
 
-    \part[5] Suppose you have k = 3 weighing and 12 coins. How many coins must you
-    weigh against each other in the first round?
+        Now lets assume the generalised case of $N$ coins, if we weigh $k$ coins with
+        each other, \(w(k) = 3k - \frac{4k^2}{N}\). It reaches its maximum when \(k =
+        \frac{3N}{8}\).  Let's assume the worst case: the counterfeit coin
+        always end up in the $2k$ coins which we weigh against each other. At each
+        weigh, we pick the optimal number of coins (\(\frac{3N}{8}\)) and reduce the
+        state space by $2k$ ( \(\frac{3N}{4}\)). First step we have \(N\) coins, after
+        one weigh we have \(3N/2\) coins, after second weigh we have
+        \(\frac{3}{4}\frac{3N}{4}\), and so on. After \(n\) weigh, we have
+        \(\frac{3}{4}^n N\) coins. We stop when we are left with 2 coins. One more
+        additional weigh, will tell which one is counterfeit.
 
-    \begin{solution}
-        
-    Now lets assume the generalised case of $N$ coins, if we weigh $k$ coins with
-    each other, \(w(k) = 3k - \frac{4k^2}{N}\). It reaches its maximum when \(k =
-    \frac{3N}{8}\).  Let's assume the worst case: the counterfeit coin
-    always end up in the $2k$ coins which we weigh against each other. At each
-    weigh, we pick the optimal number of coins (\(\frac{3N}{8}\)) and reduce the
-    state space by $2k$ ( \(\frac{3N}{4}\)). First step we have \(N\) coins, after
-    one weigh we have \(3N/2\) coins, after second weigh we have
-    \(\frac{3}{4}\frac{3N}{4}\), and so on. After \(n\) weigh, we have
-    \(\frac{3}{4}^n N\) coins. We stop when we are left with 2 coins. One more
-    additional weigh, will tell which one is counterfeit.
-
-    \(\frac{3}{4}^n N = 2 \implies n = \frac{\ln{2/N}}{\ln{3/4}} = 3.476
-    \ln{\frac{N}{2}}\).  Therefore number of maximum weighing are
-    \(3.467\ln{N/2}\). For N=12, the value is much higher than 3. Needless to
-    say, this is not the most efficient strategy.
+        \(\frac{3}{4}^n N = 2 \implies n = \frac{\ln{2/N}}{\ln{3/4}} = 3.476
+        \ln{\frac{N}{2}}\).  Therefore number of maximum weighing are
+        \(3.467\ln{N/2}\). For N=12, the value is much higher than 3. Needless to
+        say, this is not the most efficient strategy.
 
     \end{solution}
 
