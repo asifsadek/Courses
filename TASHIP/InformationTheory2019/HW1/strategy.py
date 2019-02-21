@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 """strategy.py: 
+
+This strategy is due to following students of Information theory class 2019 and
+2016.
+
+- Pushkar Khandar (2019)
+- Pavan Kaushik (2016)
+
 """
     
 __author__           = "Dilawar Singh"
@@ -27,14 +34,14 @@ class Coin():
     def __repr__(self):
         return f'{self.index:X}{self.type}'
 
-def init_coins(where=-1, whichType=None):
+def init_coins(where=-1, whichType=''):
     N = 12
     cs = [Coin(i,1.0) for i in range(N)]
     if where < 0:
         where = random.choice(range(N))
-    if whichType is None:
+    if not whichType:
         whichType = random.choice(['h', 'l'])
-    cs[where] = Coin(where, 1.1) if whichType == 'l' else Coin(where, 0.9)
+    cs[where] = Coin(where, 1.1) if whichType == 'h' else Coin(where, 0.9)
     return cs
 
 def answer(what, coin):
@@ -206,8 +213,8 @@ def test( N = 1000 ):
         coins = init_coins()
         play(coins)
 
-def main(args):
-    coins = init_coins(args.where, args.type)
+def main(**kwargs):
+    coins = init_coins(kwargs['where'], kwargs['type'])
     play(coins)
 
 if __name__ == '__main__':
@@ -226,4 +233,4 @@ if __name__ == '__main__':
     class Args: pass 
     args = Args()
     parser.parse_args(namespace=args)
-    main(args)
+    main(**vars(args))
