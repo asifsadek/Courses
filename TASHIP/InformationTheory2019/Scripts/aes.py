@@ -43,20 +43,23 @@ def main():
     ax2.set_ylabel('#Seq at peak')
     plt.tight_layout()
 
-    maxNP = []
+    likely = []
     X2, Y2 = [], []
     for n in [2,4,6,8,10,12,14,16,18,20,22,24,26]:
         PS, NS = typical_for_n(n)
         # rescale PS
         PS = PS - PS.min()
         PS = PS / PS.max()
-        maxNP.append((n,max(NS)))
+        ns = sorted(NS)
+        likely.append((n,ns[-3:]))
         ax1.semilogx(PS, NS, label='N=%d'%n)
         ax1.legend()
         plt.show( block = False )
 
-        xx, yy = zip(*maxNP)
+        xx, yy = zip(*likely)
+        ax2.clear()
         ax2.plot(xx, yy)
+        ax2.legend()
         plt.show( block=False )
         plt.pause(0.1)
 
