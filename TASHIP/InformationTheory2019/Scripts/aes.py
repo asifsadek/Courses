@@ -19,7 +19,8 @@ import random
 import scipy.special
 
 random.seed(10)
-p = 0.7
+p = random.random()
+print( p )
 
 def typical_for_n(n):
     X, Y = [], []
@@ -32,23 +33,28 @@ def typical_for_n(n):
 
 
 def main():
+    plt.figure(figsize=(8,4))
     ax = plt.subplot(121)
     maxNP = []
-    for n in [10,20,30,40,50]:
+    X2, Y2 = [], []
+    for n in [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]:
         PS, NS = typical_for_n(n)
         # rescale PS
         PS = PS - PS.min()
         PS = PS / PS.max()
-        print(n, len(NS))
         maxNP.append((n,max(NS)))
-        ax.semilogy(PS, NS, label='N=%d'%n)
+        ax.semilogx(PS, NS, label='N=%d'%n)
+
         plt.legend()
     plt.xlabel( 'Normalized P')
     plt.ylabel( '#Seq')
 
     plt.subplot(122)
-    plt.plot(maxNP[0], maxNP[1])
-
+    xx, yy = zip(*maxNP)
+    plt.plot(xx, yy)
+    plt.xlabel('N')
+    plt.ylabel('#Seq at peak')
+    plt.tight_layout()
     plt.savefig( '%s.png' % __file__ )
 
 if __name__ == '__main__':
