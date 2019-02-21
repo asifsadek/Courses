@@ -34,28 +34,32 @@ def typical_for_n(n):
 
 def main():
     plt.figure(figsize=(8,4))
-    ax = plt.subplot(121)
+    ax1 = plt.subplot(121)
+    ax1.set_xlabel( 'Scaled P')
+    ax1.set_ylabel( '#Seq')
+
+    ax2 = plt.subplot(122)
+    ax2.set_xlabel('N')
+    ax2.set_ylabel('#Seq at peak')
+    plt.tight_layout()
+
     maxNP = []
     X2, Y2 = [], []
-    for n in [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]:
+    for n in [2,4,6,8,10,12,14,16,18,20,22,24,26]:
         PS, NS = typical_for_n(n)
         # rescale PS
         PS = PS - PS.min()
         PS = PS / PS.max()
         maxNP.append((n,max(NS)))
-        ax.semilogx(PS, NS, label='N=%d'%n)
+        ax1.semilogx(PS, NS, label='N=%d'%n)
+        ax1.legend()
+        plt.show( block = False )
 
-        plt.legend()
-    plt.xlabel( 'Normalized P')
-    plt.ylabel( '#Seq')
+        xx, yy = zip(*maxNP)
+        ax2.plot(xx, yy)
+        plt.show( block=False )
+        plt.pause(0.1)
 
-    plt.subplot(122)
-    xx, yy = zip(*maxNP)
-    plt.plot(xx, yy)
-    plt.xlabel('N')
-    plt.ylabel('#Seq at peak')
-    plt.tight_layout()
-    plt.savefig( '%s.png' % __file__ )
 
 if __name__ == '__main__':
     main()
