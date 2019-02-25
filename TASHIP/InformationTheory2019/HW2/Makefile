@@ -1,4 +1,4 @@
-all : ./hw2.md.pdf
+all : ./hw2.pdf
 
-%.md.pdf : %.pdf 
-	~/Scripts/md2pdf.sh $<
+%.pdf : %.tex 
+	lualatex --shell-escape $<
