@@ -97,7 +97,7 @@ def save_df(df, n):
     df['Pr(Y)'] = df.sum(axis=1)
     xs = df.sum(axis=0)
     df.loc['P(X)'] = xs
-    print(df)
+    #print(df)
     df.to_csv( f'{n}.csv', index=True)
 
 def main( ):
