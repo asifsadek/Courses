@@ -84,10 +84,18 @@ def mutual_information(df):
     return hx+hy-hxy
 
 def prob_equal_ncoins(n):
-    p = 1.0
-    for l in range(12-n+1,12+1):
-        p = p*(l-1)/l
-    return p
+    # This step is cruicial.
+    # what is the probability of both side being equal? It is equal to
+    # picking the 2*n normal coins i.e. 11/12*10/11*.... If there is a
+    # counterfiet coin then probability is (11/12)^(2n). If the
+    # probability that a counterfiet is in the heap is 0.5 then this
+    # proability is (1-p) + p(11/12)^*2n . For simplicity let's
+    # assume p=0.5
+    e = 1.0
+    for x in range(12, 12-2*n, -1):
+        e *= (x-1)/x
+    return 1/3 + 2*e/3
+
 
 def save_df(df, n):
     df['Pr(Y)'] = df.sum(axis=1)
@@ -101,14 +109,7 @@ def main( ):
         print( f'[INFO] Coins to weigh {n}' )
         for outcome in ['LH', 'RH', 'EQ']:
             s = pd.Series(possibilities(n, outcome))
-            # This step is cruicial.
-            # what is the probability of both side being equal? It is equal to
-            # picking the 2*n normal coins i.e. 11/12*10/11*.... If there is a
-            # counterfiet coin then probability is (11/12)^(2n). If the
-            # probability that a counterfiet is in the heap is 0.5 then this
-            # proability is (1-p) + p(11/12)^*2n . For simplicity let's
-            # assume p=0.5
-            pBalance = 0.5*prob_equal_ncoins(n)
+            pBalance = prob_equal_ncoins(n)
             pNotBalance = (1-pBalance)
             if outcome == 'EQ':
                 s = s*pBalance
