@@ -11,6 +11,7 @@ __status__           = "Development"
 
 import math
 import pandas as pd
+from decimal import Decimal 
 
 N = 12
 
@@ -35,7 +36,7 @@ def possibilities(ncoins, outcome):
         for i in range(2*ncoins, N):
             l = normal.copy()
             h = normal.copy()
-            l[i], h[i] = 'h', 'l'
+            l[i], h[i] = 'l', 'h'
             res += [l, h]
     elif outcome == "LH":
         # Either left ncoins are heavy or right ncoins were light. All of these
@@ -57,7 +58,7 @@ def possibilities(ncoins, outcome):
             res += [lc, rc]
             
     for x in res:
-        dist[''.join(x)] = 1 / len(res)
+        dist[''.join(x)] = 1.0/len(res)
     return dist
 
 def entropy(ps):
@@ -79,28 +80,24 @@ def mutual_information(df):
     hx = entropy(xs)
     hy = entropy(ys)
     hxy = entropy(xys)
-    print(xs)
     print( f'hx={hx:.4f}, hy={hy:.4f}, hxy={hxy:.4f}' )
     return hx+hy-hxy
 
 def prob_equal_ncoins(n):
     # This step is cruicial.
     # what is the probability of both side being equal? It is equal to
-    # picking the 2*n normal coins i.e. 11/12*10/11*.... If there is a
-    # counterfiet coin then probability is (11/12)^(2n). If the
-    # probability that a counterfiet is in the heap is 0.5 then this
-    # proability is (1-p) + p(11/12)^*2n . For simplicity let's
-    # assume p=0.5
-    e = 1.0
-    for x in range(12, 12-2*n, -1):
-        e *= (x-1)/x
-    return 1/3 + 2*e/3
+    # picking the 2*n normal coins i.e. 11/12*10/11*.... 
+    # We pick a light, heavy or normal coin with the probability of 1/3. That is
+    # there is 2/3 chance that there is counterfiet coins.
+    e = (12-2*n)/12
+    return 1/3+2*e/3
 
 
 def save_df(df, n):
     df['Pr(Y)'] = df.sum(axis=1)
     xs = df.sum(axis=0)
     df.loc['P(X)'] = xs
+    print(df)
     df.to_csv( f'{n}.csv', index=True)
 
 def main( ):

@@ -37,9 +37,7 @@ def weigh(n):
     return res
 
 def prob_equal(n):
-    e = 1.0
-    for x in range(12, 12-2*n, -1):
-        e *= (x-1)/x
+    e = (12-2*n)/12
     return 1/3 + 2*e/3
 
 def main():
