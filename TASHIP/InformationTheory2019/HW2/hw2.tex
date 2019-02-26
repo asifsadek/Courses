@@ -1,7 +1,10 @@
+\RequirePackage{luatex85,shellesc}
 \documentclass[answers]{exam} 
 \usepackage{amssymb,amsmath}
 \usepackage{hyperref}
 \usepackage{longtable,booktabs}
+\usepackage{bashful}
+
 \usepackage{pgfplotstable}
 \title{Homework 2}
 \author{Dilawar Singh}
@@ -113,7 +116,16 @@ And it is equal to $\frac{11}{12}\frac{10}{11}\frac{10}{11}\frac{9}{10}$ when
 there is a fake coin and 1 when there is none. Assuming that half the time there
 is fake coin, we take the weighted average.
 
+My solution is in this python script
+\url{https://github.com/dilawar/courses/raw/master/TASHIP/InformationTheory2019/HW2/prob3.py}.
+But I don't think that it is correct. Let's see what you guys have done.
+
+\bash[stdout]
+python prob3.py
+\END
+
 \end{solution}
+
 
 \end{questions}
 
