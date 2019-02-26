@@ -76,9 +76,6 @@ def mutual_information(df):
     xys = df.values.ravel().tolist()
     assert math.isclose(sum(xs),1.0), sum(xs)
     assert math.isclose(sum(ys),1.0), sum(ys)
-    #  print('xs', xs.values)
-    #  print('ys', ys.values)
-    #  print('xys', xys)
     hx = entropy(xs)
     hy = entropy(ys)
     hxy = entropy(xys)
@@ -92,19 +89,26 @@ def prob_equal_ncoins(n):
         p = p*(l-1)/l
     return p
 
+def save_df(df, n):
+    df['Pr(Y)'] = df.sum(axis=1)
+    xs = df.sum(axis=0)
+    df.loc['P(X)'] = xs
+    df.to_csv( f'{n}.csv', index=True)
+
 def main( ):
     for n in range(1, 7):
         df = pd.DataFrame()
         print( f'[INFO] Coins to weigh {n}' )
         for outcome in ['LH', 'RH', 'EQ']:
             s = pd.Series(possibilities(n, outcome))
-            # what is the probability of both side being equal is equal to
-            # picking the 2*n coins of equal weight. If there is always a
+            # This step is cruicial.
+            # what is the probability of both side being equal? It is equal to
+            # picking the 2*n normal coins i.e. 11/12*10/11*.... If there is a
             # counterfiet coin then probability is (11/12)^(2n). If the
             # probability that a counterfiet is in the heap is 0.5 then this
             # proability is (1-p) + p(11/12)^*2n . For simplicity let's
             # assume p=0.5
-            pBalance = prob_equal_ncoins(n)
+            pBalance = 0.5*prob_equal_ncoins(n)
             pNotBalance = (1-pBalance)
             if outcome == 'EQ':
                 s = s*pBalance
@@ -112,7 +116,7 @@ def main( ):
                 s = s*pNotBalance/2.0
             df[outcome] = s
         mi = mutual_information(df)
-        #  print(df)
+        save_df(df, n)
         print(f'\t\tMUTUAL INFORMATION={mi:.4f}')
 
 if __name__ == '__main__':
