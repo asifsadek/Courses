@@ -11,7 +11,7 @@ class JointDist():
 
     def __init__(self, ncoins):
         print("[INFO] Total coins: %s" % ncoins)
-        self.prob_x = [ 1/2.0, 1/4.0, 1/4.0 ]
+        self.prob_x = [ 1/2.0, 1/4.0, 1/4.0]
         self.states = 2*ncoins +1
         self.mat = np.zeros((self.states, 3), dtype=np.float)
         self.init_dist()
