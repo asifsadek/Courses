@@ -65,8 +65,11 @@ def main():
     res['H(X)-H(X|Y)'] = res['H(X)'] + - res['H(X|Y)']
     res['H(Y)-H(Y|X)'] = res['H(Y)'] + - res['H(Y|X)']
     
-    for k, v in res.items():
-        print( f'{k:20s} {v:g} bits')
+    with open('sol1.tsv', 'w' ) as f:
+        f.write("Entropy\t Value\n")
+        for k, v in res.items():
+            print(f'{k:20s} {v:g} bits')
+            f.write(f'{k}\t{v}\n')
 
 if __name__ == '__main__':
     main()
