@@ -1,9 +1,14 @@
 \RequirePackage{luatex85,shellesc}
-\documentclass[answers]{exam}
+\documentclass[twocolumn,answers]{exam}
+\usepackage[margin=15mm]{geometry}
+\usepackage{listings}
 \usepackage{concrete}
 \usepackage{libertine}
 \usepackage{hyperref}
 \usepackage{bashful}
+\usepackage{fontspec}
+\setmonofont{inconsolata}
+\lstset{basicstyle=\ttfamily}
 
 \title{Homework 3}
 \author{Dilawar Singh}
@@ -34,10 +39,10 @@
     \part[3] Construct a string which has no meaning under this system
 
     \begin{solution} Here is one.
-    \begin{verbatim}
+    \begin{lstlisting}
     01110110011000110111
      A B A   F   x
-    \end{verbatim}
+    \end{lstlisting}
     \end{solution}
 
 \end{parts}

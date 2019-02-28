@@ -65,12 +65,12 @@ which letters occur precisely as often as expected?
 \begin{solution}
     How many ways you can choose alphabet $x_i$, $n\Pr(x_i)$ times? Number of
     sequences which has 4 \texttt{A}, 2 \texttt{T} and 1 \texttt{C} and
-    \texttt{G} each i.e., ${8\choose 4}{4\choose2}{2\choose 1}{1\choose 1}=280$
+    \texttt{G} each i.e., ${8\choose 4}{4\choose2}{2\choose 1}{1\choose 1}=840$
 \end{solution}
 
 \part[1] What is the total probability of getting some stringently typical sequence?
 \begin{solution}
-    \pgfmathsetmacro\res{280/16/16/64}\res. 
+    \pgfmathsetmacro\res{840/16/16/64}\res. 
 \end{solution}
 \part[5] Redo the whole calculation if the length is 16. What is the total probability of
 getting a stringently typical sequence? Are we converging to 1?
