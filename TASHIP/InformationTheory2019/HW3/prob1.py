@@ -39,9 +39,9 @@ def parta():
     global codewords_
     print('=== (a)')
     if check_prefix_free(codewords_):
-        print('Code %s is instantaneous' % str(codewords_))
+        print('Code is instantaneous')
     else:
-        print('Code %s is not instantaneous' % str(codewords_))
+        print('Code is not instantaneous')
 
 def partb():
     global codewords_
