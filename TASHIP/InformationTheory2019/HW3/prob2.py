@@ -44,29 +44,17 @@ class Seq():
 
 def solve(N):
     hp = 1.459148
-    X, Y, Z = [], [], []
-    ps = np.arange(0, 0.5, 0.01)
-    for p in ps:
-        q = 1.0 - p
-        for k in range(N):
-            prn = nchoosek(N, k) * p**k * q**(N-k)
-            hseq = - 1 / N * math.log(prn, 2) if prn > 0 else 0
-            X.append(p)
-            Y.append(k)
-            Z.append(hseq)
-
-    ax = plt.subplot(projection='3d')
-    ax.plot_trisurf(X, Y, Z)
-    xx, yy = np.meshgrid(ps, range(N))
-    ax.plot_surface(xx, yy, np.ones_like(xx)*hp, alpha=0.5)
-    ax.set_xlabel(r'$a$ s.t. $a+b=1$')
-    ax.set_ylabel(r'$k$, $\binom{%d}{k}$'%N)
-    ax.set_zlabel( r'$\frac{1}{N}\Pr(S)$' )
-
-    plt.savefig( f'{__file__}.png' )
+    aa = np.arange(0, 0.5, 1e-5)
+    H = []
+    for a in aa:
+        b = 1-a
+        hq = a*math.log(2,2) + b*math.log(3,2) 
+        H.append(hq)
+        if abs(hp-hq)/hp < 1e-6:
+            print( f"{a:.5f}, {b:.5f}, {hq:.5f}")
 
 def main():
-    solve(500)
+    solve(1000)
 
 if __name__ == '__main__':
     main()
