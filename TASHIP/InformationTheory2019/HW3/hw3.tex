@@ -102,11 +102,13 @@ Typical sequences include those around the point $\{1/2,1/3,1/6\}$.
 
 \begin{parts}
     \pgfmathsetmacro{\HP}{1.459148}
-    \part What is H(p)?
+
+    \part[2] What is H(p)?
     \begin{solution}
         \HP bits.
     \end{solution}
-    \part What are the values of a and b such that a + b = 1, where the value of
+
+    \part[6]  What are the values of a and b such that a + b = 1, where the value of
     $-\frac{1}{n} \log (Pr(S))$ is very close to $H$? I.e. what sequences with
     no ‘$C$’s at all have probabilities similar to that of the typical sequence?
     \begin{solution}
@@ -154,18 +156,21 @@ Hint: this can all be done by hand.
             , title={$H(a,b,c)$, where $a+b+c=1$}
             , area style
             , label style=sloped
-            , ternary limits relative=false
+            % , ternary limits relative=false
             , colorbar horizontal
             , colormap name=viridis
             , grid=none
             ]
-            \addplot3[very thick
-                , contour prepared={labels=false}
-                , ternary limits relative=true
+            \addplot3+[
+            % very thick
+                , only marks
+                , mark=+
+                , scatter
+                , ternary limits relative=false
                 ] table[x=a,y=b,z=c,point meta=\thisrow{h}]{prob3.csv};
 
             \addplot3+[only marks, mark=*, color=black, very thick] 
-                coordinates {(1/2, 1/3, 1/6)}
+                coordinates {(0.5, 1/3, 1/6)}
                 node[above,fill=white] {\scriptsize $H(p)$};
 
             \node[
