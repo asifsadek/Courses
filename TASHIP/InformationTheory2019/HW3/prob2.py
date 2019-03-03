@@ -37,7 +37,7 @@ def solve1():
 
 def solve2(hp):
     p, q = 1/2, 1/3
-    print('(b) Folloing are the numerical solutions.' )
+    print('(b) Followings are the numerical solutions.' )
     for a in np.arange(0, 0.5, 1e-5):
         pr = a*math.log(1/p, 2)+(1-a)*math.log(1/q,2)
         if math.isclose(pr, hp, rel_tol=1e-5):
