@@ -2,10 +2,12 @@
 \documentclass[twocolumn,answers]{exam}
 \usepackage[margin=15mm]{geometry}
 \usepackage{listings}
+\usepackage{pgfplots}
+\usepgfplotslibrary{ternary}
 \usepackage{concrete}
 \usepackage{libertine}
 \usepackage{hyperref}
-\usepackage{bashful}
+\usepackage{luacode}
 \usepackage{fontspec}
 \setmonofont{inconsolata}
 \lstset{basicstyle=\ttfamily}
@@ -98,11 +100,34 @@ he most probable sequence is \texttt{AAAAAAA.....}.
 Typical sequences include those around the point $\{1/2,1/3,1/6\}$.
 
 \begin{parts}
+    \pgfmathsetmacro{\HP}{1.459148}
     \part What is H(p)?
+    \begin{solution}
+        \HP bits.
+    \end{solution}
     \part What are the values of a and b such that a + b = 1, where the value of
     $-\frac{1}{n} \log (Pr(S))$ is very close to $H$? I.e. what sequences with
     no ‘$C$’s at all have probabilities similar to that of the typical sequence?
+    \begin{solution}
+        Find $a, b$ such that $a+b=1$ and $a*log(2)+b*log(3) \sim \HP$. Its not
+        hard to find the solution to these two equations.
+        \pgfmathsetmacro\ANS{(\HP-log2(3))/(log2(2/3))} $a=\ANS$. 
+        
+        A numeric solution is below. It was computed using Python
+        \url{http://github.com/dilawar/courses/raw/master/TASHIP/InformationTheory2019/HW3/prob2.py}
+        \begin{lstlisting}[basicstyle=\footnotesize]
+(a) Entropy is 1.4591479170272448 bit.
+(b) Folloing are the numerical solutions.
+H(p)=1.459148, pr=1.459160, a=0.215060
+H(p)=1.459148, pr=1.459155, a=0.215070
+H(p)=1.459148, pr=1.459149, a=0.215080
+H(p)=1.459148, pr=1.459143, a=0.215090
+H(p)=1.459148, pr=1.459137, a=0.215100
+        \end{lstlisting}
+
+    \end{solution}
 \end{parts}
+
 
 \bonusquestion[10] \textbf{Ternary plots}
 You can plot any three non-negative numbers that add up to 1 in a “ternary plot” with
@@ -117,6 +142,18 @@ On a ternary plot, make a contour plot of probabilities of sequences assuming
 underlying probabilities $=(1/2,1/3,1/6)$. Mark the curve corresponding to the
 set of sequences with probabilities similar to that of the typical sequence.
 Hint: this can all be done by hand.
+
+\begin{solution}
+    This can be done by hand but I am gonna use my computer anyway (since I
+    don't trust my hands so much!).
+
+    \begin{tikzpicture}[scale=1, every node/.style={} ]
+        \begin{ternaryaxis}
+            % \addplot3 table {prob3.csv}
+        \end{ternaryaxis}
+    \end{tikzpicture}	
+    
+\end{solution}
 
 \end{questions}
 

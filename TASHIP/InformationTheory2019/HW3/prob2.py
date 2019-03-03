@@ -1,5 +1,4 @@
 """prob2.py: 
-
 """
     
 __author__           = "Dilawar Singh"
@@ -28,45 +27,29 @@ def nchoosek_math(n, k):
 def nchoosek(n, k):
     return scipy.special.comb(n, k)
 
-class Seq():
-    def __init__(self, N):
-        global dist_
-        alph = list(dist_.keys())
-        ws = list(dist_.values())
-        self.s = random.choices(alph, weights=ws, k=N)
+def entropy(ps):
+    assert math.isclose(sum(ps), 1.0), sum(ps)
+    return sum([-p*math.log(p,2) for p in ps if p > 0])
 
-    def __repr__(self):
-        return ''.join(self.s)
+def solve1():
+    hp = entropy([1/2, 1/3, 1/6])
+    return hp
 
-    def Q(self):
-        c = Counter(self.s)
-        return {k:v/len(self.s) for k, v in c.items()}
+def solve2(hp):
+    p, q = 1/2, 1/3
+    print('(b) Folloing are the numerical solutions.' )
+    for a in np.arange(0, 0.5, 1e-5):
+        pr = a*math.log(1/p, 2)+(1-a)*math.log(1/q,2)
+        if math.isclose(pr, hp, rel_tol=1e-5):
+            print(f"H(p)={hp:.6f}, pr={pr:.6f}, a={a:.6f}")
 
-def solve(N):
-    hp = 1.459148
-    X, Y, Z = [], [], []
-    ps = np.arange(0, 0.5, 0.01)
-    for p in ps:
-        q = 1.0 - p
-        for k in range(N):
-            prn = nchoosek(N, k) * p**k * q**(N-k)
-            hseq = - 1 / N * math.log(prn, 2) if prn > 0 else 0
-            X.append(p)
-            Y.append(k)
-            Z.append(hseq)
-
-    ax = plt.subplot(projection='3d')
-    ax.plot_trisurf(X, Y, Z)
-    xx, yy = np.meshgrid(ps, range(N))
-    ax.plot_surface(xx, yy, np.ones_like(xx)*hp, alpha=0.5)
-    ax.set_xlabel(r'$a$ s.t. $a+b=1$')
-    ax.set_ylabel(r'$k$, $\binom{%d}{k}$'%N)
-    ax.set_zlabel( r'$\frac{1}{N}\Pr(S)$' )
-
-    plt.savefig( f'{__file__}.png' )
+def solve():
+    hp = solve1()
+    print( f'(a) Entropy is {hp} bit.' )
+    b = solve2(hp)
 
 def main():
-    solve(500)
+    solve()
 
 if __name__ == '__main__':
     main()
