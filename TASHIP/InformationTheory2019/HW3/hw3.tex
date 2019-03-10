@@ -1,7 +1,6 @@
 \RequirePackage{luatex85,shellesc}
 \documentclass[twocolumn, answers]{exam}
 \usepackage[margin=15mm]{geometry}
-
 \usepackage{listings}
 \usepackage{pgfplots}
 \usepgfplotslibrary{ternary}
@@ -156,21 +155,22 @@ Hint: this can all be done by hand.
             , title={$H(a,b,c)$, where $a+b+c=1$}
             , area style
             , label style=sloped
-            % , ternary limits relative=false
+            , ternary limits relative=false
             , colorbar horizontal
             , colormap name=viridis
             , grid=none
             ]
+
             \addplot3+[
-            % very thick
-                , only marks
-                , mark=+
-                , scatter
+                very thick
+                , contour prepared
+                % , scatter
+                , no marks
                 , ternary limits relative=false
-                ] table[x=a,y=b,z=c,point meta=\thisrow{h}]{prob3.csv};
+                ] table[x=a, y=c, z=b, point meta=\thisrow{h}]{prob3.random.csv};
 
             \addplot3+[only marks, mark=*, color=black, very thick] 
-                coordinates {(0.5, 1/3, 1/6)}
+                coordinates {(0.5, 1/6, 1/3)}
                 node[above,fill=white] {\scriptsize $H(p)$};
 
             \node[
